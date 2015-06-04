@@ -1,0 +1,33 @@
+---
+name: casio
+commands:
+  "on":
+    cmd: "\e0__port__*2*76*1LE"
+    returns:
+      default:
+        regex: !ruby/regexp /./
+        message: "on command send"
+  "off":
+    cmd: "\e0__port__*2*76*3LE"
+    returns:
+      default:
+        regex: !ruby/regexp /./
+        message: "off command send"
+  lamp:
+    cmd: "\e0__port__*2*108LE"
+    returns:
+      default:
+        regex: !ruby/regexp /./
+        message: "current status (max = 20000): __return__"
+  status:
+    cmd: "\e0__port__*2*104LE"
+    returns:
+      1:
+        regex: !ruby/regexp /^1$/
+        message: "beamer is on"
+      3:
+        regex: !ruby/regexp /^3$/
+        message: "beamer is off"
+      default:
+        regex: !ruby/regexp /./
+        message: "unknown return: __return__"
