@@ -4,6 +4,7 @@ require 'yaml'
 
 define_method(:sendtelnet) do | beamer:, host:,port:, command:, extron_port: '', testmode: false|
 
+  result = String.new
 
   config = YAML.load_file("beamers.d/#{beamer}.yaml")
 
@@ -20,26 +21,27 @@ define_method(:sendtelnet) do | beamer:, host:,port:, command:, extron_port: '',
     telnet.waitfor('Match' => /\d{2}:\d{2}:\d{2}$\s/ )
     telnet.cmd( 'String' => config['commands'][command]['cmd'].sub('__port__',extron_port.to_s), 'Match' => /\n/) { |c|
       found = false
-      puts "return #{c.dump}"
+      #puts "return #{c.dump}"
       config['commands'][command]['returns'].each do |k,v|
         unless c.match(/#{v['regex']}/).nil?
-          puts v['message'].sub('__return__',c)
+          result = v['message'].sub('__return__',c)
           #telnet.close
           found = true
           break
         end
       end
-      puts "ERROR: cannot find #{c}. Please reconfigure your config yaml" unless found
+      result = "ERROR: cannot find #{c}. Please reconfigure your config yaml" unless found
 
     }
+    telnet.close
 
     #telnet.cmd('exit')
-    telnet.close
+
   rescue Timeout::Error
     puts 'ERROR: Timout error'
     telnet.close
     exit 2
   end
   #puts resp
-
+  result
 end

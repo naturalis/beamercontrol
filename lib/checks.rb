@@ -15,7 +15,7 @@ end
 
 def check_ip(ip)
   unless ip =~ Resolv::IPv4::Regex
-    puts "#{host} is not an valid ip address"
+    puts "#{ip} is not an valid ip address"
     exit 1
   end
 end
