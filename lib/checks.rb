@@ -1,28 +1,36 @@
 def check_beamer_name(beamer)
   unless File.file? "./beamers.d/#{beamer}.yaml"
-    puts "Beamer config #{beamer}.yaml does not compute. Run ./beamer.rb -h for options"
-    exit 1
+    "Beamer config #{beamer}.yaml does not compute. Run ./beamer.rb -h for options"
+  else
+    'ok'
   end
 end
 
-def check_beamer_options(beamer,command)
-  config = YAML.load_file("beamers.d/#{beamer}.yaml")
-  unless config['commands'].include? command
-    puts "Option #{command}.yaml does not compute. Run ./beamer.rb -o -b [beamer] for beamer options"
-    exit 1
+def check_beamer_options(opts)
+  begin
+    config = YAML.load_file("beamers.d/#{opts[0]}.yaml")
+    unless config['commands'].include? opts[1]
+      "Option #{opts[1]} is not an option. Check your config"
+    else
+      'ok'
+    end
+  rescue
+    "Cannot load config file. Check beamer name"
   end
 end
 
 def check_ip(ip)
   unless ip =~ Resolv::IPv4::Regex
-    puts "#{host} is not an valid ip address"
-    exit 1
+    "#{ip} is not an valid ip address"
+  else
+    'ok'
   end
 end
 
 def check_port(port)
   if port.to_s.match(/^\d+$/).nil?
-    puts "#{port} is not a Integer"
-    exit 1
+     "#{port} is not a Integer"
+  else
+    'ok'
   end
 end
