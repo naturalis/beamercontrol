@@ -1,13 +1,10 @@
 require 'yaml'
-def options(beamer='none')
+def beameroptions(beamer='none')
   fail if beamer == 'none'
+  result = Hash.new
   begin
-    YAML.load_file("./beamers.d/#{beamer}.yaml")['commands'].each do |k,v|
-      puts '-' + k
-    end
+    result = { "options" => YAML.load_file("./beamers.d/#{beamer}.yaml")['commands'].keys }
   rescue
-    puts "Could not load beamertype: #{beamer}"
-    exit 1
+    result = {"error" => "Could not load beamertype: #{beamer}" }
   end
-  exit
 end
