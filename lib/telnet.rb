@@ -2,7 +2,7 @@ require 'net/telnet'
 require 'resolv'
 require 'yaml'
 #puts "#{File.join(File.expand_path(File.dirname(__FILE__)).split('/')[0..-1])}/../lib/*.rb"
-Dir["#{File.join(File.expand_path(File.dirname(__FILE__)).split('/')[0..-1])}/../lib/*.rb"].each { |l| puts l}
+Dir["#{File.join(File.expand_path(File.dirname(__FILE__)).split('/')[0..-1])}/../lib/*.rb"].each { |l| require l}
 
 
 define_method(:sendtelnet) do | beamer:, host:, port:, command:, extron_port: '', testmode: false|
@@ -16,26 +16,12 @@ define_method(:sendtelnet) do | beamer:, host:, port:, command:, extron_port: ''
   }
 
 
-  checks.each do |k,v|
-    next if send(k,v) == 'ok'
-    result = send(k,v)
-    break
-  end
-  # checks << check_beamer_name(beamer)
-  # checks << check_beamer_options(beamer,command)
-  # checks << check_ip(host)
-  # checks << check_port(port)
-
-
-  # checkok = true
-  # checks.each do |c|
-  #   checkok = false unless c == 'ok'
+  # checks.each do |k,v|
+  #   next if send(k,v) == 'ok'
+  #   result = send(k,v)
+  #   break
   # end
-  #
-  # unless checkok
-  #   put
-  # end
-  # exit
+
 
 
 
@@ -53,8 +39,7 @@ define_method(:sendtelnet) do | beamer:, host:, port:, command:, extron_port: ''
     begin
       telnet = Net::Telnet::new( 'Host' => host, 'Timeout' => 5 , 'Port' => port)
       telnet.waitfor('Match' => /\d{2}:\d{2}:\d{2}$\s/ )
-      #telnet.cmd( 'String' => config['commands'][command]['cmd'].sub('__port__',extron_port.to_s), 'Match' => /\n/) { |c|
-      telnet.cmd( 'String' => config['commands'][command]['cmd'].sub('__port__',extron_port), 'Match' => /\n/) { |c|
+      telnet.cmd( 'String' => config['commands'][command]['cmd'].sub('__port__',extron_port.to_s), 'Match' => /\n/) { |c|
         found = false
         #puts "return #{c.dump}"
         config['commands'][command]['returns'].each do |k,v|
