@@ -1,8 +1,9 @@
 require 'yaml'
 def list
+  result = Array.new
   Dir["./beamers.d/*.yaml"].each do |f|
     b = YAML.load_file(f)
-    puts b['name']
+    result << b['name']
   end
-  exit
+  {"beamers" => result }
 end

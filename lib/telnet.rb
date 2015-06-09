@@ -1,47 +1,81 @@
 require 'net/telnet'
 require 'resolv'
 require 'yaml'
+#puts "#{File.join(File.expand_path(File.dirname(__FILE__)).split('/')[0..-1])}/../lib/*.rb"
+Dir["#{File.join(File.expand_path(File.dirname(__FILE__)).split('/')[0..-1])}/../lib/*.rb"].each { |l| puts l}
 
-define_method(:sendtelnet) do | beamer:, host:,port:, command:, extron_port: '', testmode: false|
+
+define_method(:sendtelnet) do | beamer:, host:, port:, command:, extron_port: '', testmode: false|
 
   result = String.new
+  checks = {
+    'check_beamer_name' => beamer,
+    'check_beamer_options' => [beamer,command],
+    'check_ip' => host,
+    'check_port' => port
+  }
 
-  config = YAML.load_file("beamers.d/#{beamer}.yaml")
 
-  if testmode
-    puts "Sending to #{host}:#{port} on extronport: #{extron_port}"
-    puts "Sending command: #{command}"
-    puts "Telnet Command to send: #{config['commands'][command]['cmd'].sub('__port__',extron_port.to_s).dump}"
-    exit
+  checks.each do |k,v|
+    next if send(k,v) == 'ok'
+    result = send(k,v)
+    break
   end
+  # checks << check_beamer_name(beamer)
+  # checks << check_beamer_options(beamer,command)
+  # checks << check_ip(host)
+  # checks << check_port(port)
 
-  #resp = String.new
-  begin
-    telnet = Net::Telnet::new( 'Host' => host, 'Timeout' => 5 , 'Port' => port)
-    telnet.waitfor('Match' => /\d{2}:\d{2}:\d{2}$\s/ )
-    telnet.cmd( 'String' => config['commands'][command]['cmd'].sub('__port__',extron_port.to_s), 'Match' => /\n/) { |c|
-      found = false
-      #puts "return #{c.dump}"
-      config['commands'][command]['returns'].each do |k,v|
-        unless c.match(/#{v['regex']}/).nil?
-          result = v['message'].sub('__return__',c)
-          #telnet.close
-          found = true
-          break
+
+  # checkok = true
+  # checks.each do |c|
+  #   checkok = false unless c == 'ok'
+  # end
+  #
+  # unless checkok
+  #   put
+  # end
+  # exit
+
+
+
+  if !result.empty?
+    #just a catch for errors in checks
+  elsif testmode
+
+    config = YAML.load_file("beamers.d/#{beamer}.yaml")
+    result = "Sending to #{host}:#{port} on extronport: #{extron_port}\n"
+    result += "Sending command: #{command}\n"
+    result += "Telnet Command to send: #{config['commands'][command]['cmd'].sub('__port__',extron_port.to_s).dump}"
+
+  else
+
+    begin
+      telnet = Net::Telnet::new( 'Host' => host, 'Timeout' => 5 , 'Port' => port)
+      telnet.waitfor('Match' => /\d{2}:\d{2}:\d{2}$\s/ )
+      #telnet.cmd( 'String' => config['commands'][command]['cmd'].sub('__port__',extron_port.to_s), 'Match' => /\n/) { |c|
+      telnet.cmd( 'String' => config['commands'][command]['cmd'].sub('__port__',extron_port), 'Match' => /\n/) { |c|
+        found = false
+        #puts "return #{c.dump}"
+        config['commands'][command]['returns'].each do |k,v|
+          unless c.match(/#{v['regex']}/).nil?
+            result = v['message'].sub('__return__',c)
+            #telnet.close
+            found = true
+            break
+          end
         end
-      end
-      result = "ERROR: cannot find #{c}. Please reconfigure your config yaml" unless found
+        result = "ERROR: cannot find #{c}. Please reconfigure your config yaml" unless found
 
-    }
-    telnet.close
+      }
+      telnet.close
+    rescue Timeout::Error
+      result = 'ERROR: Timout error'
+      telnet.close
+    end
 
-    #telnet.cmd('exit')
-
-  rescue Timeout::Error
-    puts 'ERROR: Timout error'
-    telnet.close
-    exit 2
   end
-  #puts resp
-  result
+
+  {"result" => result}
+
 end

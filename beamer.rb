@@ -23,7 +23,7 @@ OptionParser.new do |opts|
   end
   opts.on("-l","--list","list beamer options") do |p|
     o[:list] = p
-    list
+    list.each {|l| puts l}
     exit
   end
   opts.on('-b','--beamer BEAMER',String,'choose beamer type') do |b|
@@ -47,21 +47,25 @@ OptionParser.new do |opts|
 end.parse!
 
 if o[:options] == true
-  options(o[:beamer])
+  if options(o[:beamer]).has_key? 'options'
+    options(o[:beamer])['options'].each { |opt| puts opt}
+  else
+    puts options(o[:beamer])['error']
+  end
   exit
 end
 
 if o[:command]
-  check_beamer_name(o[:beamer])
-  check_beamer_options(o[:beamer],o[:command])
-  check_ip(o[:host])
-  check_port(o[:port])
-  sendtelnet(
+  #check_beamer_name(o[:beamer])
+  #check_beamer_options(o[:beamer],o[:command])
+  #check_ip(o[:host])
+  #check_port(o[:port])
+  puts sendtelnet(
     host: o[:host],
     port: o[:port],
     beamer: o[:beamer] ,
     command: o[:command],
     testmode: o[:testmode] ,
-    extron_port: o[:extron_port])
+    extron_port: o[:extron_port])['result']
     exit
 end
