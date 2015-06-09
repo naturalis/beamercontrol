@@ -47,8 +47,8 @@ post '/command/:cmd' do
        host: data['host'],
        port: data['port'],
        beamer: data['beamer'] ,
-       command: 'status',
-       extron_port: 1).to_json
+       command: params[:cmd],
+       extron_port: data['extron_port']).to_json
   rescue
     {:error => 'no valid json'}.to_json
   end

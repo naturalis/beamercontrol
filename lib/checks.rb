@@ -10,7 +10,7 @@ def check_beamer_options(opts)
   begin
     config = YAML.load_file("beamers.d/#{opts[0]}.yaml")
     unless config['commands'].include? opts[1]
-      "Option #{opts[1]}.yaml does not compute. Run ./beamer.rb -o -b [beamer] for beamer options"
+      "Option #{opts[1]} is not an option. Check your config"
     else
       'ok'
     end
