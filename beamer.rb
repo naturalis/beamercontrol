@@ -47,10 +47,10 @@ OptionParser.new do |opts|
 end.parse!
 
 if o[:options] == true
-  if options(o[:beamer]).has_key? 'options'
-    options(o[:beamer])['options'].each { |opt| puts opt}
+  if beameroptions(o[:beamer]).has_key? 'options'
+    beameroptions(o[:beamer])['options'].each { |opt| puts opt}
   else
-    puts options(o[:beamer])['error']
+    puts beameroptions(o[:beamer])['error']
   end
   exit
 end

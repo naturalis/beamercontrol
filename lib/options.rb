@@ -1,5 +1,5 @@
 require 'yaml'
-def options(beamer='none')
+def beameroptions(beamer='none')
   fail if beamer == 'none'
   result = Hash.new
   begin
