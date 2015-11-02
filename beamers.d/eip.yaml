@@ -1,0 +1,42 @@
+---
+name: eip
+commands:
+  "on":
+    cmd: "\e0__port__*2*76*1LE"
+    returns:
+      default:
+        regex: !ruby/regexp /./
+        message: "on command send"
+  "off":
+    cmd: "\e0__port__*2*76*3LE"
+    returns:
+      default:
+        regex: !ruby/regexp /./
+        message: "off command send"
+  lamp:
+    cmd: "\e0__port__*2*128LE"
+    returns:
+      default:
+        regex: !ruby/regexp /./
+        message: "current status (max = 2000): __return__"
+  status:
+    cmd: "\e0__port__*2*120LE"
+    returns:
+      901:
+        regex: !ruby/regexp /^901$/
+        message: "beamer is on"
+      900:
+        regex: !ruby/regexp /^900$/
+        message: "beamer is off"
+      904:
+        regex: !ruby/regexp /^904$/
+        message: "beamer status is unavailable"
+      903:
+        regex: !ruby/regexp /^903$/
+        message: "beamer is warming up"
+      902:
+        regex: !ruby/regexp /^902$/
+        message: "beamer is cooling down"
+      default:
+        regex: !ruby/regexp /./
+        message: "unknown return: __return__"
