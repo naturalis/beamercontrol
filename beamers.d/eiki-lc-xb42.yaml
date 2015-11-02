@@ -1,5 +1,5 @@
 ---
-name: mitsubishi
+name: eiki-lc-xb42
 commands:
   "on":
     cmd: "\e0__port__*2*76*1LE"
@@ -8,25 +8,19 @@ commands:
         regex: !ruby/regexp /./
         message: "on command send"
   "off":
-    cmd: "\e0__port__*2*76*3LE"
+    cmd: "\e0__port__*2*67*3LE"
     returns:
       default:
         regex: !ruby/regexp /./
         message: "off command send"
   lamp:
-    cmd: "\e0__port__*2*132LE"
+    cmd: "\e0__port__*2*128LE"
     returns:
       default:
         regex: !ruby/regexp /./
-        message: "current status lamp1 (max = 2000): __return__"
-  lamp2:
-    cmd: "\e0__port__*2*136LE"
-    returns:
-      default:
-        regex: !ruby/regexp /./
-        message: "current status lamp2 (max = 2000): __return__"
+        message: "current status (max = 2000): __return__"
   status:
-    cmd: "\e0__port__*2*120LE"
+    cmd: "\e0__port__*2*116LE"
     returns:
       901:
         regex: !ruby/regexp /^901$/

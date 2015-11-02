@@ -1,0 +1,33 @@
+---
+name: eiki-eip-x5500
+commands:
+  "on":
+    cmd: "\e0__port__*2*80*1LE"
+    returns:
+      default:
+        regex: !ruby/regexp /./
+        message: "on command send"
+  "off":
+    cmd: "\e0__port__*2*80*3LE"
+    returns:
+      default:
+        regex: !ruby/regexp /./
+        message: "off command send"
+  lamp:
+    cmd: "\e0__port__*2*120LE"
+    returns:
+      default:
+        regex: !ruby/regexp /./
+        message: "current status (max = 4000): __return__"
+  status:
+    cmd: "\e0__port__*2*112LE"
+    returns:
+      137:
+        regex: !ruby/regexp /^137$/
+        message: "beamer is connected but unclear if on"
+      138:
+        regex: !ruby/regexp /^138$/
+        message: "beamer is unconnected"
+      default:
+        regex: !ruby/regexp /./
+        message: "unknown return: __return__"

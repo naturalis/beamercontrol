@@ -13,12 +13,12 @@ commands:
       default:
         regex: !ruby/regexp /./
         message: "off command send"
-  lamp1:
+  lamp:
     cmd: "\e04*2*96LE"
     returns:
       default:
         regex: !ruby/regexp /./
-        message: "current status (max = 6000): __return__"
+        message: "current status lamp1 (max = 6000): __return__"
   lamp2:
     cmd: "\e04*2*100LE"
     returns:
