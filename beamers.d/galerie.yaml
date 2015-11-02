@@ -1,0 +1,39 @@
+---
+name: galerie
+commands:
+  "on":
+    cmd: "\e1P"
+    returns:
+      default:
+        regex: !ruby/regexp /./
+        message: "on command send"
+  "off":
+    cmd: "\e0P"
+    returns:
+      default:
+        regex: !ruby/regexp /./
+        message: "off command send"
+  lamp1:
+    cmd: "\e04*2*96LE"
+    returns:
+      default:
+        regex: !ruby/regexp /./
+        message: "current status (max = 6000): __return__"
+  lamp2:
+    cmd: "\e04*2*100LE"
+    returns:
+      default:
+        regex: !ruby/regexp /./
+        message: "current status (max = 6000): __return__"
+  status:
+    cmd: "\e04*2*80LE"
+    returns:
+      901:
+        regex: !ruby/regexp /^901$/
+        message: "beamer is on"
+      900:
+        regex: !ruby/regexp /^900$/
+        message: "beamer is off"
+      default:
+        regex: !ruby/regexp /./
+        message: "unknown return: __return__"
