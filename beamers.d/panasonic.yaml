@@ -14,14 +14,29 @@ commands:
         regex: !ruby/regexp /./
         message: "off command send"
   status:
-    cmd: "\e0__port__*2*136LE"
+    cmd: "\e0__port__*2*132LE"
     returns:
-      1:
-        regex: !ruby/regexp /^1$/
+      901:
+        regex: !ruby/regexp /^901$/
         message: "beamer is on"
-      3:
-        regex: !ruby/regexp /^3$/
+      900:
+        regex: !ruby/regexp /^900$/
         message: "beamer is off"
+      902:
+        regex: !ruby/regexp /^902$/
+        message: "beamer is cooling down"
+      903:
+        regex: !ruby/regexp /^903$/
+        message: "beamer is warming up"
+      904:
+        regex: !ruby/regexp /^904$/
+        message: "beamer status is unavailable"
       default:
         regex: !ruby/regexp /./
         message: "unknown return: __return__"
+  lamp:
+      cmd: "\e0__port__*2*140LE"
+      returns:
+        default:
+          regex: !ruby/regexp /./
+          message: "current status (max = 2000): __return__"
