@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/usr/bin/ruby2.2
 
 require 'net/telnet'
 require 'resolv'
