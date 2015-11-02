@@ -20,13 +20,13 @@ commands:
         regex: !ruby/regexp /./
         message: "current status (max = 2000): __return__"
   status:
-    cmd: "\e0__port__*2*112LE"
+    cmd: "\e0__port__*2*124LE"
     returns:
       1:
-        regex: !ruby/regexp /^137$/
+        regex: !ruby/regexp /^1$/
         message: "beamer is on"
       3:
-        regex: !ruby/regexp /^138$/
+        regex: !ruby/regexp /^3$/
         message: "beamer is off"
       default:
         regex: !ruby/regexp /./
