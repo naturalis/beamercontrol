@@ -1,5 +1,5 @@
 ---
-name: casio
+name: nec-m260w
 commands:
   "on":
     cmd: "\e0__port__*2*76*1LE"
@@ -14,20 +14,20 @@ commands:
         regex: !ruby/regexp /./
         message: "off command send"
   lamp:
-    cmd: "\e0__port__*2*108LE"
+    cmd: "\e0__port__*2*136LE"
     returns:
       default:
         regex: !ruby/regexp /./
-        message: "[casio]current status (max = 20000): __return__"
+        message: "[nec-m260w]current status (max = 6000): __return__"
   status:
-    cmd: "\e0__port__*2*104LE"
+    cmd: "\e0__port__*2*132LE"
     returns:
       1:
         regex: !ruby/regexp /^1$/
-        message: "[casio]beamer is on"
+        message: "[nec-m260w]beamer is on"
       3:
         regex: !ruby/regexp /^3$/
-        message: "[casio]beamer is off"
+        message: "[nec-m260w]beamer is off"
       default:
         regex: !ruby/regexp /./
         message: "unknown return: __return__"

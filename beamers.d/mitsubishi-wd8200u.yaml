@@ -1,5 +1,5 @@
 ---
-name: eip
+name: mitsubishi-wd8200u
 commands:
   "on":
     cmd: "\e0__port__*2*76*1LE"
@@ -14,29 +14,35 @@ commands:
         regex: !ruby/regexp /./
         message: "off command send"
   lamp:
-    cmd: "\e0__port__*2*128LE"
+    cmd: "\e0__port__*2*132LE"
     returns:
       default:
         regex: !ruby/regexp /./
-        message: "[eip]current status (max = 2000): __return__"
+        message: "[mitsubishi-wd8200u]current status lamp1 (max = 2000): __return__"
+  lamp2:
+    cmd: "\e0__port__*2*136LE"
+    returns:
+      default:
+        regex: !ruby/regexp /./
+        message: "[mitsubishi-wd8200u]current status lamp2 (max = 2000): __return__"
   status:
     cmd: "\e0__port__*2*120LE"
     returns:
       901:
         regex: !ruby/regexp /^901$/
-        message: "[eip]beamer is on"
+        message: "[mitsubishi-wd8200u]beamer is on"
       900:
         regex: !ruby/regexp /^900$/
-        message: "[eip]beamer is off"
+        message: "[mitsubishi-wd8200u]beamer is off"
       904:
         regex: !ruby/regexp /^904$/
-        message: "[eip]beamer status is unavailable"
+        message: "[mitsubishi-wd8200u]beamer status is unavailable"
       903:
         regex: !ruby/regexp /^903$/
-        message: "[eip]beamer is warming up"
+        message: "[mitsubishi-wd8200u]beamer is warming up"
       902:
         regex: !ruby/regexp /^902$/
-        message: "[eip]beamer is cooling down"
+        message: "[mitsubishi-wd8200u]beamer is cooling down"
       default:
         regex: !ruby/regexp /./
         message: "unknown return: __return__"

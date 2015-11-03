@@ -1,5 +1,5 @@
 ---
-name: panasonic
+name: panasonic-pt-d3500 
 commands:
   "on":
     cmd: "\e0__port__*2*76*1LE"
@@ -18,19 +18,19 @@ commands:
     returns:
       901:
         regex: !ruby/regexp /^901$/
-        message: "[panasonic]beamer is on"
+        message: "[panasonic-pt-d3500]beamer is on"
       900:
         regex: !ruby/regexp /^900$/
-        message: "[panasonic]beamer is off"
+        message: "[panasonic-pt-d3500]beamer is off"
       902:
         regex: !ruby/regexp /^902$/
-        message: "[panasonic]beamer is cooling down"
+        message: "[panasonic-pt-d3500]beamer is cooling down"
       903:
         regex: !ruby/regexp /^903$/
-        message: "[panasonic]beamer is warming up"
+        message: "[panasonic-pt-d3500]beamer is warming up"
       904:
         regex: !ruby/regexp /^904$/
-        message: "[panasonic]beamer status is unavailable"
+        message: "[panasonic-pt-d3500]beamer status is unavailable"
       default:
         regex: !ruby/regexp /./
         message: "unknown return: __return__"
@@ -39,4 +39,4 @@ commands:
       returns:
         default:
           regex: !ruby/regexp /./
-          message: "[panasonic]current status (max = 2000): __return__"
+          message: "[panasonic-pt-d3500]current status (max = 2000): __return__"
