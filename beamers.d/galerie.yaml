@@ -18,22 +18,22 @@ commands:
     returns:
       default:
         regex: !ruby/regexp /./
-        message: "current status lamp1 (max = 6000): __return__"
+        message: "[galerie]current status lamp1 (max = 6000): __return__"
   lamp2:
     cmd: "\e04*2*100LE"
     returns:
       default:
         regex: !ruby/regexp /./
-        message: "current status (max = 6000): __return__"
+        message: "[galerie]current status (max = 6000): __return__"
   status:
     cmd: "\e04*2*80LE"
     returns:
       901:
         regex: !ruby/regexp /^901$/
-        message: "beamer is on"
+        message: "[galerie]beamer is on"
       900:
         regex: !ruby/regexp /^900$/
-        message: "beamer is off"
+        message: "[galerie]beamer is off"
       default:
         regex: !ruby/regexp /./
         message: "unknown return: __return__"

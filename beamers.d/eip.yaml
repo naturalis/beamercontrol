@@ -18,25 +18,25 @@ commands:
     returns:
       default:
         regex: !ruby/regexp /./
-        message: "current status (max = 2000): __return__"
+        message: "[eip]current status (max = 2000): __return__"
   status:
     cmd: "\e0__port__*2*120LE"
     returns:
       901:
         regex: !ruby/regexp /^901$/
-        message: "beamer is on"
+        message: "[eip]beamer is on"
       900:
         regex: !ruby/regexp /^900$/
-        message: "beamer is off"
+        message: "[eip]beamer is off"
       904:
         regex: !ruby/regexp /^904$/
-        message: "beamer status is unavailable"
+        message: "[eip]beamer status is unavailable"
       903:
         regex: !ruby/regexp /^903$/
-        message: "beamer is warming up"
+        message: "[eip]beamer is warming up"
       902:
         regex: !ruby/regexp /^902$/
-        message: "beamer is cooling down"
+        message: "[eip]beamer is cooling down"
       default:
         regex: !ruby/regexp /./
         message: "unknown return: __return__"

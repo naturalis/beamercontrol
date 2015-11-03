@@ -18,16 +18,16 @@ commands:
     returns:
       default:
         regex: !ruby/regexp /./
-        message: "current status (max = 6000): __return__"
+        message: "[nec]current status (max = 6000): __return__"
   status:
     cmd: "\e0__port__*2*132LE"
     returns:
       1:
         regex: !ruby/regexp /^1$/
-        message: "beamer is on"
+        message: "[nec]beamer is on"
       3:
         regex: !ruby/regexp /^3$/
-        message: "beamer is off"
+        message: "[nec]beamer is off"
       default:
         regex: !ruby/regexp /./
         message: "unknown return: __return__"

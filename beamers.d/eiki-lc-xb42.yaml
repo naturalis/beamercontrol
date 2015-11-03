@@ -18,25 +18,25 @@ commands:
     returns:
       default:
         regex: !ruby/regexp /./
-        message: "current status (max = 2000): __return__"
+        message: "[eiki-lc-xb42]current status (max = 2000): __return__"
   status:
     cmd: "\e0__port__*2*116LE"
     returns:
       901:
         regex: !ruby/regexp /^901$/
-        message: "beamer is on"
+        message: "[eiki-lc-xb42]beamer is on"
       900:
         regex: !ruby/regexp /^900$/
-        message: "beamer is off"
+        message: "[eiki-lc-xb42]beamer is off"
       904:
         regex: !ruby/regexp /^904$/
-        message: "beamer status is unavailable"
+        message: "[eiki-lc-xb42]beamer status is unavailable"
       903:
         regex: !ruby/regexp /^903$/
-        message: "beamer is warming up"
+        message: "[eiki-lc-xb42]beamer is warming up"
       902:
         regex: !ruby/regexp /^902$/
-        message: "beamer is cooling down"
+        message: "[eiki-lc-xb42]beamer is cooling down"
       default:
         regex: !ruby/regexp /./
         message: "unknown return: __return__"

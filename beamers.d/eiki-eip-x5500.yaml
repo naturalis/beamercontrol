@@ -18,16 +18,16 @@ commands:
     returns:
       default:
         regex: !ruby/regexp /./
-        message: "current status (max = 4000): __return__"
+        message: "[eiki-eip-x5500]current status (max = 4000): __return__"
   status:
     cmd: "\e0__port__*2*112LE"
     returns:
       137:
         regex: !ruby/regexp /^137$/
-        message: "beamer is connected but unclear if on"
+        message: "[eiki-eip-x5500]beamer is connected but unclear if on"
       138:
         regex: !ruby/regexp /^138$/
-        message: "beamer is unconnected"
+        message: "[eiki-eip-x5500]beamer is unconnected"
       default:
         regex: !ruby/regexp /./
         message: "unknown return: __return__"

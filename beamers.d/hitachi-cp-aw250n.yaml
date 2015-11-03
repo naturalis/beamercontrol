@@ -1,5 +1,5 @@
 ---
-name: eiki-eip-3000n
+name: hitachi-cp-aw250n
 commands:
   "on":
     cmd: "\e0__port__*2*76*1LE"
@@ -8,29 +8,32 @@ commands:
         regex: !ruby/regexp /./
         message: "on command send"
   "off":
-    cmd: "\e0__port__*2*67*3LE"
+    cmd: "\e0__port__*2*76*3LE"
     returns:
       default:
         regex: !ruby/regexp /./
         message: "off command send"
   lamp:
-    cmd: "\e0__port__*2*112LE"
+    cmd: "\e0__port__*2*176LE"
     returns:
       default:
         regex: !ruby/regexp /./
-        message: "[eiki-eip-3000n]current status (max = 2000): __return__"
+        message: "[hitachi-cp-aw250n]current status (max = 3000): __return__"
   status:
-    cmd: "\e0__port__*2*136LE"
+    cmd: "\e0__port__*2*164LE"
     returns:
       901:
         regex: !ruby/regexp /^901$/
-        message: "[eiki-eip-3000n]beamer is on"
+        message: "[hitachi-cp-aw250n]beamer is on"
       900:
         regex: !ruby/regexp /^900$/
-        message: "[eiki-eip-3000n]beamer is off"
+        message: "[hitachi-cp-aw250n]beamer is off"
+      902:
+        regex: !ruby/regexp /^902$/
+        message: "[hitachi-cp-aw250n]beamer is cooling down"
       904:
         regex: !ruby/regexp /^904$/
-        message: "[eiki-eip-3000n]beamer status is unavailable"
+        message: "[hitachi-cp-aw250n]beamer status is unavailable"
       default:
         regex: !ruby/regexp /./
         message: "unknown return: __return__"

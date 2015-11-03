@@ -1,5 +1,5 @@
 ---
-name: casio
+name: casio-xj-m250
 commands:
   "on":
     cmd: "\e0__port__*2*76*1LE"
@@ -18,16 +18,19 @@ commands:
     returns:
       default:
         regex: !ruby/regexp /./
-        message: "[casio]current status (max = 20000): __return__"
+        message: "[casio-xj-m250]current status (max = 20000): __return__"
   status:
-    cmd: "\e0__port__*2*104LE"
+    cmd: "\e0__port__*2*100LE"
     returns:
-      1:
-        regex: !ruby/regexp /^1$/
-        message: "[casio]beamer is on"
-      3:
-        regex: !ruby/regexp /^3$/
-        message: "[casio]beamer is off"
+      901:
+        regex: !ruby/regexp /^901$/
+        message: "[casio-xj-m250]beamer is on"
+      900:
+        regex: !ruby/regexp /^900$/
+        message: "[casio-xj-m250]beamer is off"
+      904:
+        regex: !ruby/regexp /^904$/
+        message: "[casio-xj-m250]beamer status is unavailable"
       default:
         regex: !ruby/regexp /./
         message: "unknown return: __return__"
